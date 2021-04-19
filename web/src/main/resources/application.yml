@@ -1,0 +1,40 @@
+server:
+  port: 9000
+logging:
+  level:
+    org:
+      springframework: debug
+    xyz:
+      leecue: debug
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/enterprise_netdisc?useSSL=false&serverTimezone=Asia/Shanghai
+    druid:
+      initial-size: 20
+      max-active: 30
+      min-idle: 20
+      max-wait: 60000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT * FROM `registry` LIMIT 1
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: false
+  mail:
+    host: smtp.qq.com
+    port: 465
+    username: 810414696@qq.com
+    password: ffhjflyknrdebebc
+    default-encoding: utf-8
+    activemq:
+      broker-url: tcp://127.0.0.1:61616
+      packages:
+        trust-all: true
+      user: admin
+      password: admin
+mybatis:
+  type-aliases-package: xyz.leecue.model
