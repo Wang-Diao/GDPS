@@ -1,16 +1,38 @@
 package xyz.leecue.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import xyz.leecue.dao.UserMapper;
 import xyz.leecue.model.User;
 
-/**
- * @author LeeCue
- * @date 2021-03-19
- */
-public interface UserService {
-    /**
-     * get user information by username
-     * @param username username
-     * @return user's base information
-     */
-    User getUserInfoByUsername(String username);
+@Service
+public class UserService {
+    @Autowired
+    UserMapper userMapper;
+    //登录
+    public boolean checkUsernameAndPassword(User user) {
+        User existUser = userMapper.getUserByUsername(user);
+        if (existUser == null) {
+            return false;
+        }
+        if (existUser.getUsername().equals(user.getUsername())
+          && existUser.getPassword().equals(user.getPassword())) {
+            return true;
+        }
+        return false;
+    }
+
+    //注册
+    public boolean putUsernameAndPassword(User user){
+        User existUser = userMapper.getUserByUsername(user);
+
+        if(existUser!=null){
+            return false;
+        }
+
+        int res = userMapper.putUserByUsername(user);
+        System.out.println(res);
+        System.out.println(user);
+        return true;
+    }
 }

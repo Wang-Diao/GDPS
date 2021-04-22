@@ -26,4 +26,15 @@ public class RespBean {
         this.status = responseCode.getStatus();
         this.msg = responseCode.getMsg();
     }
+    public RespBean(ResponseCode responseCode, Object object) {
+        this.status = responseCode.getStatus();
+        this.msg = responseCode.getMsg();
+        this.object = object;
+    }
+
+    public RespBean(int status, String msg, Object object) {
+        this.status = status;
+        this.msg = msg;
+        this.object = object;
+    }
 }

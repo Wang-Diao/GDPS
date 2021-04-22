@@ -1,46 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="xyz.leecue.dao.UserMapper">
-    <sql id="userAllCols">
-        user_ID, username, password, name, sex, department_ID, phone, email, role_ID, createTime, updateTime,
-        locked, enabled
-    </sql>
-
-    <sql id="userBaseCols">
-        user_ID, username, name, sex, department_ID, phone, email, role_ID, createTime, updateTime
-    </sql>
     
-    <resultMap id="userAllInfoMap" type="xyz.leecue.model.User">
-        <!-- 主键 -->
-        <id column="user_ID" property="userId"/>
-
-        <result column="username" property="username"/>
-        <result column="password" property="password"/>
-        <result column="name" property="name"/>
-        <result column="sex" property="sex"/>
-        <result column="phone" property="phone"/>
-        <result column="email" property="email"/>
-        <result column="createTime" property="createTime"/>
-        <result column="updateTime" property="updateTime"/>
-        <result column="locked" property="locked"/>
-        <result column="enabled" property="enabled"/>
-
-        <!-- 级联查询 -->
-        <association property="role" column="role_ID"
-                     select="xyz.leecue.dao.RoleMapper.findRoleById"/>
-    </resultMap>
-
-    <select id="findUserByUsername" resultMap="userAllInfoMap">
-        SELECT <include refid="userAllCols"/>
-        FROM `user`
+    <select id="getUserByUsername" resultType="xyz.leecue.model.User">
+        SELECT  id, username, password
+        FROM user
         WHERE username = #{username}
     </select>
-
-    <select id="findUserInfoByUserName" resultMap="userAllInfoMap">
-        SELECT <include refid="userAllCols"/>
-        FROM `user`
-        WHERE username = #{username}
-    </select>
-
-
+    
+    <insert id="putUserByUsername" parameterType="xyz.leecue.model.User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user(username,password,email,telephone,name,sex,age,idcard)
+        VALUES (#{username},#{password},#{email},#{telephone},#{name},#{sex},#{age},#{idcard})
+    </insert>
 </mapper>
